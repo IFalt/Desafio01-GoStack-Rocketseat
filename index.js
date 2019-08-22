@@ -4,18 +4,13 @@ const app = express();
 
 app.use(express.json());
 
-const projects = [
-  { id: "1", title: "Novo projeto", tasks: [] },
-  { id: "2", title: "Projeto sdsda", tasks: [] },
-  { id: "3", title: "Projeto Atual", tasks: [] }
-];
+const projects = []
 
 app.get("/projects", (req, res) => {
   return res.json(projects);
 });
 
-app.post("/projetcs", (req, res) => {
-  console.log(req.body);
+app.post("/projects", (req, res) => {
   const { id, title } = req.body;
 
   const project = {
@@ -28,5 +23,16 @@ app.post("/projetcs", (req, res) => {
 
   return res.json(project);
 });
+
+app.put('/projects/:id', (req,res)=>{
+  const id = req.params.id
+  const {title}=req.body
+
+  const project = projects.find(param => param.id == id)
+    
+  project.title = title
+  
+  return res.json(projects)
+})
 
 app.listen(3333);
